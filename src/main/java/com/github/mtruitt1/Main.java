@@ -5,6 +5,10 @@ import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.interaction.*;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -15,8 +19,18 @@ public class Main {
     public static Random rand;
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        // Insert your bot's token here
-        String token = "ODQ3NTM2MjMwMTAzMjUzMDQy.YK_fnw.0N_peI0QLq9pxNEryFvbS2BuPCw";
+        String token = "";
+        //Token is read from botkey.txt
+        try {
+            File f = new File("botkey.txt");
+            FileReader fr = new FileReader(f);
+            BufferedReader inStream = new BufferedReader(fr);
+            token = inStream.readLine();
+        } catch (Exception e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+            return;
+        }
         DiscordApi api = new DiscordApiBuilder().setToken(token).login().join();
         System.out.println("DnDBot is now online.");
         api.updateActivity("Initializing...");
